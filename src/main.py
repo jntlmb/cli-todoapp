@@ -1,4 +1,4 @@
-from todo import Todo
+from src.todo import Todo
 
 todo_dict = {}
 
