@@ -1,4 +1,4 @@
-from src.todo import Todo
+from todo import Todo
 
 todo_dict = {}
 
@@ -16,36 +16,17 @@ def user_input(message):
 
 def create_todo(description):
     new_todo = Todo(description, False)
-    todo_dict[new_todo.description] = new_todo.is_complete 
+    new_todo.save_to_db() 
 
 def show_todos():
-    counter = 1
-    for todo, is_complete in todo_dict.items():
-        if is_complete == False:
-            print(f"{counter}. Todo: {todo} / Status: Not Complete")
-            counter += 1
-        else:
-            print(f"{counter}. Todo: {todo} / Status: Complete")
-            counter += 1
+    Todo.list_todos()
 
 def complete_todo():
     show_todos()
-    operation = user_input("Enter Index of the Todo to change the Status from: ")
+    todo_id = user_input("Enter ID of Todo you like to change the Status from: ")
+    Todo.change_todo_status(todo_id)
 
-    counter = 1
-    for key in todo_dict.keys():
-        if counter == int(operation):
-            key_to_change = key
-        counter += 1
-        
-    if key_to_change in todo_dict:
-        if todo_dict[key_to_change] == False:
-            todo_dict[key_to_change] = True
-        else:
-            todo_dict[key_to_change] = False
-    
-        
-
+#update
 def delete_todo():
     show_todos()
     operation = user_input("Enter Index of the Todo to delete: ")
@@ -74,7 +55,7 @@ while True:
         elif int(operation) == 3:
             complete_todo()
         elif int(operation) == 4:
-            delete_todo()
+            pass
         else:
             continue     
     else:
